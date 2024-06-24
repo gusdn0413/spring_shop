@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: spring_shop
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/SpringShop
+    username: root
+    password: Qkr1593574!s
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+server:
+  servlet:
+    jsp:
+      init-parameters:
+        development: true
+
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:/mybatis/mappers/*.xml
