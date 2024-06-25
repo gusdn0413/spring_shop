@@ -1,18 +1,18 @@
 <%@page language="java" contentType="text/html;charset=UTF-8" %>
-<%@ include file="../util/jsUtil.jsp" %>
+<%@ include file="../util/header.jsp" %>
 <html>
 <head>
-    <title>회원가입</title>
+    <title>회원 정보 수정</title>
 </head>
 <body>
 <div class="container-fluid">
     <div class="main h-100">
-        <form action="/member/register" method="post">
+        <form action="/member/update/${memberDTO.id}" method="post">
             <div class="row justify-content-center">
                 <div class="col-4">
                     <label for="email">이메일</label>
                     <input type="text" name="email" id="email" class="form-control" oninput="disableButton()">
-                    <a class="btn btn-outline-primary" onclick="validateEmail()">중복확인</a>
+                    <a class="btn btn-outline-primary" onclick="validateUsername()">중복확인</a>
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -23,27 +23,32 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-4">
-                    <label for="password">비밀번호</label>
-                    <input type="password" name="password" id="password" class="form-control">
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-4">
                     <label for="nickname">닉네임</label>
                     <input type="text" name="nickname" id="nickname" class="form-control">
                 </div>
             </div>
-
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <label for="address">주소</label>
+                    <input type="text" name="address" id="address" class="form-control">
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <label for="phoneNumber">전화번호</label>
+                    <input type="text" name="phoneNumber" id="phoneNumber" class="form-control">
+                </div>
+            </div>
             <div class="row justify-content-center">
                 <div class="col-4 text-center">
-                    <input id="btnSubmit" type="submit" class="btn btn-outline-primary" value="회원 가입" disabled>
+                    <input id="btnSubmit" type="submit" class="btn btn-outline-primary" value="정보 수정" disabled>
                 </div>
             </div>
         </form>
     </div>
 </div>
 <script>
-    function validateEmail() {
+    function validateUsername() {
         let email = $('#email').val();
         $.ajax({
             url: '/member/validateEmail',

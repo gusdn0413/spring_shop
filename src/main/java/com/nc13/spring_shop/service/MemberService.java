@@ -15,11 +15,23 @@ public class MemberService {
         return sqlSession.selectOne(NAMESPACE + "auth", memberDTO);
     }
 
-    public boolean validateLoginId(String email) {
+    public boolean validateEmail(String email) {
         return sqlSession.selectOne(NAMESPACE + "selectByEmail", email) == null;
     }
 
-    public void insert(MemberDTO memberDTO) {
+    public void register(MemberDTO memberDTO) {
         sqlSession.insert(NAMESPACE + "register", memberDTO);
+    }
+
+    public MemberDTO selectOne(int memberId) {
+        return sqlSession.selectOne(NAMESPACE + "selectOne", memberId);
+    }
+
+    public void update(MemberDTO memberDTO) {
+        sqlSession.update(NAMESPACE + "update", memberDTO);
+    }
+
+    public void delete(int memberId) {
+        sqlSession.delete(NAMESPACE + "delete", memberId);
     }
 }

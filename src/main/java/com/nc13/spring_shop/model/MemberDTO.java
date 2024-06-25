@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class MemberDTO {
+
     private int id;
     private String email;
     private String password;
@@ -12,5 +13,6 @@ public class MemberDTO {
     private int role;
     private String address;
     private String phoneNumber;
-    private Gender gender;
+    private int sellItemId;
+    private boolean gender;
 }

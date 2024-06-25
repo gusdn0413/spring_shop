@@ -1,4 +1,4 @@
-package com.nc13.spring_shop.controller;
+package com.nc13.spring_shop.controller.shop;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

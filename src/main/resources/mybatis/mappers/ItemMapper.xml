@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nc13.mappers.ItemMapper">
+
+    <insert id="insert" parameterType="itemDTO">
+        INSERT INTO item (price, quantity, name, entry_date, modify_date, member_seller_id, category_id)
+        VALUES(#{price}, #{quantity}, #{name}, NOW(), NOW(),#{memberSellerId}, #{categoryId})
+    </insert>
+
+    <select id="selectAll" resultType="itemDTO">
+        SELECT * from item
+        INNER JOIN member
+        ON item.member_seller_id = member.id
+    </select>
+
+    <select id="selectAllByCategory" resultType="itemDTO">
+        SELECT * from item
+        INNER JOIN member
+        ON item.member_seller_id = member.id
+        WHERE category_id = #{categoryId}
+    </select>
+
+    <select id="selectOne" resultType="itemDTO" parameterType="int">
+        SELECT * from item
+        INNER JOIN member
+        ON item.member_seller_id = member.id
+        WHERE item.id = #{id}
+    </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM item
+        WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="itemDTO">
+        UPDATE item
+        SET name = #{name},
+        price = #{price},
+        quantity = #{quantity},
+        modify_date = NOW()
+        WHERE id = #{id}
+    </update>
+</mapper>

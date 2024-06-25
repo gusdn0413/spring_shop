@@ -8,5 +8,7 @@
     </settings>
     <typeAliases>
         <typeAlias type="com.nc13.spring_shop.model.MemberDTO" alias="memberDTO"/>
+        <typeAlias type="com.nc13.spring_shop.model.CategoryDTO" alias="categoryDTO"/>
+        <typeAlias type="com.nc13.spring_shop.model.ItemDTO" alias="itemDTO"/>
     </typeAliases>
 </configuration>
