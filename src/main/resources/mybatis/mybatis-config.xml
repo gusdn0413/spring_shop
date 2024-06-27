@@ -10,5 +10,7 @@
         <typeAlias type="com.nc13.spring_shop.model.MemberDTO" alias="memberDTO"/>
         <typeAlias type="com.nc13.spring_shop.model.CategoryDTO" alias="categoryDTO"/>
         <typeAlias type="com.nc13.spring_shop.model.ItemDTO" alias="itemDTO"/>
+        <typeAlias type="com.nc13.spring_shop.model.CartDTO" alias="cartDTO"/>
+        <typeAlias type="com.nc13.spring_shop.model.OrderDTO" alias="orderDTO"/>
     </typeAliases>
 </configuration>

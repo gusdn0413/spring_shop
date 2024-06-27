@@ -42,4 +42,10 @@
         modify_date = NOW()
         WHERE id = #{id}
     </update>
+
+    <update id="updateQuantity" parameterType="itemDTO">
+        UPDATE item
+        SET quantity = #{quantity}
+        WHERE id = #{id}
+    </update>
 </mapper>

@@ -31,6 +31,7 @@ public class ItemController {
         if (login.getRole() != 2) {
             return "redirect:/shop/showAll";
         }
+
         model.addAttribute("categoryId", categoryId);
         return "item/insert";
     }
@@ -68,10 +69,13 @@ public class ItemController {
 
     @GetMapping("showAllByCategory/{categoryId}")
     public String showAllByCategory(@PathVariable int categoryId, HttpSession session, Model model) {
+
         MemberDTO login = (MemberDTO) session.getAttribute("login");
+
         if (login == null) {
             return "redirect:/";
         }
+
         List<ItemDTO> itemList = itemService.selectAllByCategory(categoryId);
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("itemList", itemList);
@@ -92,7 +96,7 @@ public class ItemController {
     }
 
     @GetMapping("update/{itemId}")
-    public String showUpdate(@PathVariable int itemId, HttpSession session,Model model) {
+    public String showUpdate(@PathVariable int itemId, HttpSession session, Model model) {
         MemberDTO login = (MemberDTO) session.getAttribute("login");
         if (login == null) {
             return "redirect:/";

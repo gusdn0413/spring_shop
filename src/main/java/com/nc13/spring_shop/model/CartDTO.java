@@ -5,15 +5,13 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class OrderDTO {
+public class CartDTO {
     private int id;
     private int itemId;
     private int memberCustomerId;
     private int memberSellerId;
-    private int price;
-    private int quantity;
-    private Date entryDate;
     private String name;
-    private String email;
-    private String address;
+    private int price;
+    private Date entryDate;
+    private int quantity;
 }

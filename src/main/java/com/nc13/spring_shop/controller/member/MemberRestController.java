@@ -25,7 +25,6 @@ public class MemberRestController {
             resultMap.put("result", "success");
         } else {
             resultMap.put("result", "fail");
-
         }
         return resultMap;
     }

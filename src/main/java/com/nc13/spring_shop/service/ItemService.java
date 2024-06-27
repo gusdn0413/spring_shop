@@ -35,4 +35,8 @@ public class ItemService {
     public void update(ItemDTO itemDTO) {
         sqlSession.update(NAMESPACE + "update", itemDTO);
     }
+
+    public void updateQuantity(ItemDTO itemDTO) {
+        sqlSession.update(NAMESPACE + "updateQuantity", itemDTO);
+    }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nc13.mappers.OrderMapper">
+
+    <insert id="insert" parameterType="orderDTO">
+        INSERT INTO `order` (item_id, price, member_customer_id, member_seller_id, entry_date, quantity)
+        VALUES(#{itemId}, #{price}, #{memberCustomerId}, #{memberSellerId}, NOW(), #{quantity})
+    </insert>
+    <select id="selectAllByCustomer" parameterType="int" resultType="orderDTO">
+        SELECT * FROM `order`
+        INNER JOIN item
+        ON order.item_id = item.id
+        WHERE member_customer_id = #{memberCustomerId}
+    </select>
+    <select id="selectOne" parameterType="int" resultType="orderDTO">
+        SELECT * FROM `order`
+        INNER JOIN item
+        ON order.item_id = item.id
+        WHERE order.id = #{id}
+    </select>
+</mapper>

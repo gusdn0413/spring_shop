@@ -37,6 +37,13 @@
 
                 <tr class="text-center">
                     <td class="text-center" colspan="3">
+                        <a class="btn btn-outline-primary" href="/cart/showAll/${memberDTO.id}">장바구니</a>
+                        <a class="btn btn-outline-primary" href="/order/showAll/${memberDTO.id}">주문목록</a>
+                    </td>
+                </tr>
+
+                <tr class="text-center">
+                    <td class="text-center" colspan="3">
                         <a class="btn btn-outline-success" href="/member/update/${memberDTO.id}">수정하기</a>
                         <button class="btn btn-outline-danger" onclick="deleteMember(${memberDTO.id})">삭제하기</button>
                     </td>
