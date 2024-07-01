@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="jakarta.tags.core" %>
 <%@page language="java" contentType="text/html;charset=UTF-8" %>
 <%@ include file="../util/header.jsp" %>
 <html>
@@ -35,12 +36,23 @@
                     <th colspan="2" class="text-center">${memberDTO.phoneNumber}</th>
                 </tr>
 
-                <tr class="text-center">
-                    <td class="text-center" colspan="3">
-                        <a class="btn btn-outline-primary" href="/cart/showAll/${memberDTO.id}">장바구니</a>
-                        <a class="btn btn-outline-primary" href="/order/showAll/${memberDTO.id}">주문목록</a>
-                    </td>
-                </tr>
+                <c:if test="${memberDTO.role ne 2 }">
+                    <tr class="text-center">
+                        <td class="text-center" colspan="3">
+                            <a class="btn btn-outline-primary" href="/cart/showAll/${memberDTO.id}">장바구니</a>
+                            <a class="btn btn-outline-primary" href="/order/showAll/${memberDTO.id}">주문목록</a>
+                        </td>
+                    </tr>
+                </c:if>
+
+                <c:if test="${memberDTO.role eq 2 }">
+                    <tr class="text-center">
+                        <td class="text-center" colspan="3">
+                            <a class="btn btn-outline-primary" href="/item/seller/showAll/${memberDTO.id}">등록 상품 목록</a>
+                            <a class="btn btn-outline-primary" href="/order/seller/showAll/${memberDTO.id}">주문받은 상품 목록</a>
+                        </td>
+                    </tr>
+                </c:if>
 
                 <tr class="text-center">
                     <td class="text-center" colspan="3">

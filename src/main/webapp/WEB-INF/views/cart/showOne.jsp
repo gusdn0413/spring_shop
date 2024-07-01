@@ -33,11 +33,11 @@
 
                     <tr class="text-center">
                         <td class="text-center" colspan="3">
+                            <a class="btn btn-outline-primary" href="/cart/updateToOrder/${cartDTO.id}">주문</a>
                             <a class="btn btn-outline-primary" href="/cart/update/${cartDTO.id}">장바구니 수정</a>
                             <button class="btn btn-outline-danger" onclick="deleteCart(${cartDTO.id})">장바구니 삭제</button>
                         </td>
                     </tr>
-
                 <tr>
                     <td colspan="3" class="text-center">
                         <a class="btn btn-outline-secondary"

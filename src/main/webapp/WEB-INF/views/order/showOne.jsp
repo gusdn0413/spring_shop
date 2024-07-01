@@ -34,7 +34,7 @@
 
                     <tr class="text-center">
                         <td class="text-center" colspan="3">
-                            <a class="btn btn-outline-primary" href="/cart/update/${orderDTO.id}">주문 수정</a>
+                            <a class="btn btn-outline-primary" href="/order/update/${orderDTO.id}">주문 수정</a>
                             <button class="btn btn-outline-danger" onclick="deleteCart(${orderDTO.id})">주문 삭제</button>
                         </td>
                     </tr>
@@ -42,7 +42,7 @@
                 <tr>
                     <td colspan="3" class="text-center">
                         <a class="btn btn-outline-secondary"
-                           href="/cart/showAll/${login.id}">목록으로</a>
+                           href="/order/showAll/${login.id}">목록으로</a>
                     </td>
                 </tr>
             </table>
@@ -64,7 +64,7 @@
                 Swal.fire({
                     title: '삭제되었습니다.'
                 }).then((result) => {
-                    location.href = '/cart/delete/' + id;
+                    location.href = '/order/delete/' + id;
                 })
             }
         });

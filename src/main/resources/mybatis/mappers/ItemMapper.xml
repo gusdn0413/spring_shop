@@ -22,6 +22,12 @@
         WHERE category_id = #{categoryId}
     </select>
 
+    <select id="selectAllByMemberId" resultType="itemDTO">
+        SELECT * from item
+        INNER JOIN member
+        ON item.member_seller_id = member.id
+        WHERE member_seller_id = #{memberSellerId}
+    </select>
     <select id="selectOne" resultType="itemDTO" parameterType="int">
         SELECT * from item
         INNER JOIN member

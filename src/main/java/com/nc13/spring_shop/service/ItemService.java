@@ -1,6 +1,7 @@
 package com.nc13.spring_shop.service;
 
 import com.nc13.spring_shop.model.ItemDTO;
+import com.nc13.spring_shop.model.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,9 @@ public class ItemService {
 
     public void updateQuantity(ItemDTO itemDTO) {
         sqlSession.update(NAMESPACE + "updateQuantity", itemDTO);
+    }
+
+    public List<ItemDTO> selectAllBySellerId(int memberId) {
+        return sqlSession.selectList(NAMESPACE + "selectAllByMemberId", memberId);
     }
 }

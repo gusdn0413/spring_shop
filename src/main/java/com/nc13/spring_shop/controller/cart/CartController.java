@@ -3,8 +3,10 @@ package com.nc13.spring_shop.controller.cart;
 import com.nc13.spring_shop.model.CartDTO;
 import com.nc13.spring_shop.model.ItemDTO;
 import com.nc13.spring_shop.model.MemberDTO;
+import com.nc13.spring_shop.model.OrderDTO;
 import com.nc13.spring_shop.service.CartService;
 import com.nc13.spring_shop.service.ItemService;
+import com.nc13.spring_shop.service.OrderService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
     private final ItemService itemService;
+    private final OrderService orderService;
 
     @GetMapping("insert/{itemId}")
     public String showInsert(HttpSession session, @PathVariable int itemId, Model model) {
@@ -120,5 +123,44 @@ public class CartController {
         }
         cartService.delete(cartId);
         return "redirect:/cart/showAll/" + login.getId();
+    }
+
+    @GetMapping("updateToOrder/{cartId}")
+    public String showUpdateCartToOrder(@PathVariable int cartId, HttpSession session,Model model) {
+        MemberDTO login = (MemberDTO) session.getAttribute("login");
+        CartDTO cartDTO = cartService.selectOne(cartId);
+
+        if (login == null) {
+            return "redirect:/";
+        }
+        if (cartDTO == null) {
+            return "redirect:/cart/showAll/" + login.getId();
+        }
+
+        model.addAttribute("cartDTO", cartDTO);
+
+        return "cart/updateToOrder";
+    }
+
+    @PostMapping("updateToOrder/{cartId}")
+    public String updateToOrder(@PathVariable int cartId, HttpSession session) {
+
+        MemberDTO login = (MemberDTO) session.getAttribute("login");
+        CartDTO cartDTO = cartService.selectOne(cartId);
+        ItemDTO itemDTO = itemService.selectOne(cartDTO.getItemId());
+        itemDTO.setQuantity(itemDTO.getQuantity() - cartDTO.getQuantity());
+        itemService.updateQuantity(itemDTO);
+
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setItemId(cartDTO.getItemId());
+        orderDTO.setMemberCustomerId(login.getId());
+        orderDTO.setPrice(cartDTO.getPrice());
+        orderDTO.setQuantity(cartDTO.getQuantity());
+        orderDTO.setMemberSellerId(cartDTO.getMemberSellerId());
+
+        orderService.insert(orderDTO);
+        cartService.delete(cartId);
+
+        return "redirect:/order/showOne/" + orderDTO.getId();
     }
 }

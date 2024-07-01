@@ -1,5 +1,6 @@
 package com.nc13.spring_shop.controller.order;
 
+import com.nc13.spring_shop.model.CartDTO;
 import com.nc13.spring_shop.model.ItemDTO;
 import com.nc13.spring_shop.model.MemberDTO;
 import com.nc13.spring_shop.model.OrderDTO;
@@ -91,5 +92,52 @@ public class OrderController {
         OrderDTO orderDTO = orderService.selectOne(orderId);
         model.addAttribute("orderDTO", orderDTO);
         return "order/showOne";
+    }
+
+    @GetMapping("update/{orderId}")
+    public String showUpdate(HttpSession session, @PathVariable int orderId, Model model) {
+        MemberDTO login = (MemberDTO) session.getAttribute("login");
+        if (login == null) {
+            return "redirect:/";
+        }
+        OrderDTO orderDTO = orderService.selectOne(orderId);
+        if (orderDTO == null) {
+            return "redirect:/cart/showAll/" + login.getId();
+        }
+        ItemDTO itemDTO = itemService.selectOne(orderDTO.getItemId());
+        model.addAttribute("orderDTO", orderDTO);
+        model.addAttribute("itemDTO", itemDTO);
+
+        return "/order/update";
+    }
+
+    @PostMapping("update/{orderId}")
+    public String update(OrderDTO orderDTO, @PathVariable int orderId) {
+
+        OrderDTO updateOrder = orderService.selectOne(orderId);
+
+        ItemDTO itemDTO = itemService.selectOne(updateOrder.getItemId());
+        itemDTO.setQuantity(itemDTO.getQuantity() + updateOrder.getQuantity() - orderDTO.getQuantity());
+        itemService.updateQuantity(itemDTO);
+
+        updateOrder.setQuantity(orderDTO.getQuantity());
+        updateOrder.setPrice(orderDTO.getQuantity() * itemDTO.getPrice());
+        orderService.update(updateOrder);
+
+        return "redirect:/order/showOne/" + updateOrder.getId();
+    }
+
+    @GetMapping("delete/{orderId}")
+    public String delete(HttpSession session, @PathVariable int orderId) {
+        MemberDTO login = (MemberDTO) session.getAttribute("login");
+        if (login == null) {
+            return "redirect:/";
+        }
+        OrderDTO orderDTO = orderService.selectOne(orderId);
+        if (orderDTO == null) {
+            return "redirect:/order/showAll/" + login.getId();
+        }
+        orderService.delete(orderId);
+        return "redirect:/order/showAll/" + login.getId();
     }
 }

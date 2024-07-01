@@ -21,7 +21,19 @@ public class OrderService {
         return sqlSession.selectList(NAMESPACE + "selectAllByCustomer", memberId);
     }
 
+    public List<OrderDTO> selectAllBySeller(int memberId) {
+        return sqlSession.selectList(NAMESPACE + "selectAllBySeller", memberId);
+    }
+
     public OrderDTO selectOne(int orderId) {
         return sqlSession.selectOne(NAMESPACE + "selectOne", orderId);
+    }
+
+    public void delete(int orderId) {
+        sqlSession.delete(NAMESPACE + "delete", orderId);
+    }
+
+    public void update(OrderDTO updateOrder) {
+        sqlSession.update(NAMESPACE + "update", updateOrder);
     }
 }

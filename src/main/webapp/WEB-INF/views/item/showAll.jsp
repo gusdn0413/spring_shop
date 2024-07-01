@@ -7,7 +7,6 @@
 </head>
 <body>
 <div class="container">
-    <h1 class="header-title text-center">카테고리 별 아이템 목록</h1>
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
             <thead class="thead-light">

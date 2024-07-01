@@ -13,15 +13,15 @@
 
 <div class="container-fluid">
     <div class="main h-100">
-        <form action="/cart/update/${cartDTO.id}" method="post">
+        <form action="/order/update/${orderDTO.id}" method="post">
             <div class="row justify-content-center">
                 <div class="col-4">
-                    <label for="quantity">장바구니 수정 수량</label>
-                    <input type="number" name="quantity" id="quantity" class="form-control" value="${cartDTO.quantity}" required>
+                    <label for="quantity">주문 수량 수정</label>
+                    <input type="number" name="quantity" id="quantity" class="form-control" value="${orderDTO.quantity}" required>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-4 text-center">
-                        <input id="btnSubmit" type="submit" class="btn btn-outline-primary" value="장바구니 수정">
+                        <input id="btnSubmit" type="submit" class="btn btn-outline-primary" value="주문 수정">
                     </div>
                 </div>
             </div>

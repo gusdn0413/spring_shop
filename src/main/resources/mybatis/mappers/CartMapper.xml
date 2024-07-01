@@ -4,23 +4,24 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nc13.mappers.CartMapper">
 
-    <insert id="insert" parameterType="cartDTO">
-        INSERT INTO cart (item_id, name, price, member_customer_id, member_seller_id, entry_date, quantity)
-        VALUES(#{itemId}, #{name}, #{price}, #{memberCustomerId}, #{memberSellerId}, NOW(), #{quantity})
+    <insert id="insert" parameterType="cartDTO" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO cart (item_id, price, member_customer_id, member_seller_id, entry_date, quantity)
+        VALUES(#{itemId}, #{price}, #{memberCustomerId}, #{memberSellerId}, NOW(), #{quantity})
     </insert>
 
     <select id="selectAll" resultType="cartDTO">
-        SELECT * FROM cart WHERE member_customer_id = #{memberCustomerId}
+        SELECT * FROM cart
+        INNER JOIN item
+        ON cart.item_id = item.id
+        WHERE member_customer_id = #{memberCustomerId}
     </select>
 
     <select id="selectOne" resultType="cartDTO">
-        SELECT * FROM cart WHERE id = #{id}
+        SELECT * FROM cart
+        INNER JOIN item
+        ON cart.item_id = item.id
+        WHERE cart.id = #{id}
     </select>
-
-    <delete id="delete" parameterType="int">
-        DELETE FROM cart
-        WHERE id = #{id}
-    </delete>
 
     <update id="update" parameterType="cartDTO">
         UPDATE cart
@@ -28,4 +29,9 @@
         price = #{price}
         WHERE id = #{id}
     </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM cart
+        WHERE id = #{id}
+    </delete>
 </mapper>
