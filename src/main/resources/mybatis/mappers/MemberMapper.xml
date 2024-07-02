@@ -9,8 +9,8 @@
 
     </select>
     <insert id="register" parameterType="memberDTO">
-        INSERT INTO member(email, name, password, nickname)
-        VALUES(#{email}, #{name}, #{password}, #{nickname})
+        INSERT INTO member(email, name, password, nickname, address, phone_number)
+        VALUES(#{email}, #{name}, #{password}, #{nickname}, #{address}, #{phoneNumber})
     </insert>
 
     <select id="selectOne" parameterType="int" resultType="memberDTO">
@@ -22,6 +22,10 @@
         SELECT * FROM member
         WHERE email = #{email} AND
         password = #{password}
+    </select>
+
+    <select id="selectAll" parameterType="memberDTO" resultType="memberDTO">
+        SELECT * FROM member
     </select>
 
     <update id="update" parameterType="memberDTO">
@@ -38,4 +42,12 @@
         DELETE FROM member
         WHERE id = #{id}
     </delete>
+
+    <update id="updateByManager" parameterType="memberDTO">
+        UPDATE member
+        SET name = #{name},
+        nickname = #{nickname},
+        role = #{role}
+        WHERE id = #{id}
+    </update>
 </mapper>

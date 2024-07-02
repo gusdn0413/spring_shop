@@ -36,4 +36,8 @@ public class OrderService {
     public void update(OrderDTO updateOrder) {
         sqlSession.update(NAMESPACE + "update", updateOrder);
     }
+
+    public List<OrderDTO> selectAll() {
+        return sqlSession.selectList(NAMESPACE + "selectAll");
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -21,15 +22,16 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("insert")
-    public String showInsert(HttpSession session) {
+    public String showInsert(HttpSession session, RedirectAttributes redirectAttributes) {
         MemberDTO login = (MemberDTO) session.getAttribute("login");
         if (login == null) {
             return "redirect:/";
         }
         if (login.getRole() != 3) {
-            return "redirect:/shop/showAll";
+            redirectAttributes.addFlashAttribute("message", "권한이 없습니다.");
+            return "redirect:/showMessage";
         }
-        return "category/insert";
+        return "category/manager/insert";
     }
 
     @PostMapping("insert")

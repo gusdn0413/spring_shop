@@ -11,6 +11,7 @@ public class ItemDTO {
     private int price;
     private int quantity;
     private String name;
+    private String content;
     private Date entryDate;
     private Date modifyDate;
     private int memberSellerId;

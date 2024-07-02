@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html;charset=UTF-8" %>
-<%@ include file="../util/header.jsp" %>
+<%@ include file="../../util/header.jsp" %>
 <html>
 <head>
     <title>카테고리 등록</title>

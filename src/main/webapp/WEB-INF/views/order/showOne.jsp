@@ -31,6 +31,10 @@
                     <th>판매자 번호</th>
                     <th>${orderDTO.memberSellerId}</th>
                 </tr>
+                <tr>
+                    <th>상품 내용</th>
+                    <th>${orderDTO.content}</th>
+                </tr>
 
                     <tr class="text-center">
                         <td class="text-center" colspan="3">
@@ -70,3 +74,5 @@
         });
     }
 </script>
+</body>
+</html>

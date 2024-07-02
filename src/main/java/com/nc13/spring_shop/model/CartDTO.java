@@ -14,4 +14,5 @@ public class CartDTO {
     private int price;
     private Date entryDate;
     private int quantity;
+    private String content;
 }

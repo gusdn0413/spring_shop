@@ -21,4 +21,15 @@ public class CategoryService {
         return sqlSession.selectList(NAMESPACE + "selectAll");
     }
 
+    public CategoryDTO selectOne(int categoryId) {
+        return sqlSession.selectOne(NAMESPACE + "selectOne", categoryId);
+    }
+
+    public void update(CategoryDTO updateCategoryDTO) {
+        sqlSession.update(NAMESPACE + "update", updateCategoryDTO);
+    }
+
+    public void delete(int categoryId) {
+        sqlSession.delete(NAMESPACE + "delete", categoryId);
+    }
 }

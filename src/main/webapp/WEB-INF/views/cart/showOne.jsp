@@ -30,6 +30,10 @@
                     <th>판매자 번호</th>
                     <th>${cartDTO.memberSellerId}</th>
                 </tr>
+                <tr>
+                    <th>상품 내용</th>
+                    <th>${cartDTO.content}</th>
+                </tr>
 
                     <tr class="text-center">
                         <td class="text-center" colspan="3">

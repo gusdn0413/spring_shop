@@ -9,6 +9,16 @@
         VALUES(#{itemId}, #{price}, #{memberCustomerId}, #{memberSellerId}, NOW(), #{quantity})
     </insert>
 
+    <select id="selectAll" parameterType="int" resultType="orderDTO">
+        SELECT * FROM `order`
+        INNER JOIN item
+        ON order.item_id = item.id
+    </select>
+
+    <select id="selectMaxRow" resultType="int">
+        SELECT COUNT(*) FROM item
+    </select>
+
     <select id="selectAllByCustomer" parameterType="int" resultType="orderDTO">
         SELECT * FROM `order`
         INNER JOIN item
@@ -38,7 +48,7 @@
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM order
+        DELETE FROM `order`
         WHERE id = #{id}
     </delete>
 </mapper>

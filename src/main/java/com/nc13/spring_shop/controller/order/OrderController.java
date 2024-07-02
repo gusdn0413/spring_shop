@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class OrderController {
     }
 
     @PostMapping("insert/{itemId}")
-    public String insert(@PathVariable int itemId, HttpSession session, OrderDTO orderDTO) {
+    public String insert(@PathVariable int itemId, HttpSession session, OrderDTO orderDTO, RedirectAttributes redirectAttributes) {
 
         MemberDTO login = (MemberDTO) session.getAttribute("login");
         if (login == null) {
@@ -58,7 +59,12 @@ public class OrderController {
         orderDTO.setMemberCustomerId(login.getId());
         orderDTO.setMemberSellerId(itemDTO.getMemberSellerId());
         orderDTO.setName(itemDTO.getName());
+        orderDTO.setContent(itemDTO.getContent());
         itemDTO.setQuantity(itemDTO.getQuantity() - orderDTO.getQuantity());
+        if (itemDTO.getQuantity() < 0) {
+            redirectAttributes.addFlashAttribute("message", "재고가 부족합니다");
+            return "redirect:/showMessage";
+        }
 
         itemService.updateQuantity(itemDTO);
         orderService.insert(orderDTO);
@@ -67,13 +73,15 @@ public class OrderController {
     }
 
     @GetMapping("/showAll/{memberId}")
-    public String showAll(@PathVariable int memberId, Model model, HttpSession session) {
+    public String showAll(@PathVariable int memberId, Model model,
+                          HttpSession session, RedirectAttributes redirectAttributes) {
         MemberDTO login = (MemberDTO) session.getAttribute("login");
         if (login == null) {
             return "redirect:/";
         }
         if (memberId != login.getId()) {
-            //권한이 없습니다
+            redirectAttributes.addFlashAttribute("message", "권한이 없습니다.");
+            return "redirect:/showMessage";
         }
 
         List<OrderDTO> orderList = orderService.selectAllByCustomer(memberId);
@@ -95,14 +103,18 @@ public class OrderController {
     }
 
     @GetMapping("update/{orderId}")
-    public String showUpdate(HttpSession session, @PathVariable int orderId, Model model) {
+    public String showUpdate(HttpSession session, @PathVariable int orderId,
+                             Model model, RedirectAttributes redirectAttributes) {
+
         MemberDTO login = (MemberDTO) session.getAttribute("login");
         if (login == null) {
             return "redirect:/";
         }
+
         OrderDTO orderDTO = orderService.selectOne(orderId);
         if (orderDTO == null) {
-            return "redirect:/cart/showAll/" + login.getId();
+            redirectAttributes.addFlashAttribute("message", "주문이 없습니다.");
+            return "redirect:/showMessage";
         }
         ItemDTO itemDTO = itemService.selectOne(orderDTO.getItemId());
         model.addAttribute("orderDTO", orderDTO);
@@ -112,9 +124,18 @@ public class OrderController {
     }
 
     @PostMapping("update/{orderId}")
-    public String update(OrderDTO orderDTO, @PathVariable int orderId) {
-
+    public String update(OrderDTO orderDTO, @PathVariable int orderId,
+                         HttpSession session, RedirectAttributes redirectAttributes) {
+        MemberDTO login = (MemberDTO) session.getAttribute("login");
+        if (login == null) {
+            return "redirect:/";
+        }
         OrderDTO updateOrder = orderService.selectOne(orderId);
+
+        if (updateOrder == null) {
+            redirectAttributes.addFlashAttribute("message", "주문이 없습니다.");
+            return "redirect:/showMessage";
+        }
 
         ItemDTO itemDTO = itemService.selectOne(updateOrder.getItemId());
         itemDTO.setQuantity(itemDTO.getQuantity() + updateOrder.getQuantity() - orderDTO.getQuantity());
@@ -128,14 +149,16 @@ public class OrderController {
     }
 
     @GetMapping("delete/{orderId}")
-    public String delete(HttpSession session, @PathVariable int orderId) {
+    public String delete(HttpSession session, @PathVariable int orderId,RedirectAttributes redirectAttributes) {
         MemberDTO login = (MemberDTO) session.getAttribute("login");
         if (login == null) {
             return "redirect:/";
         }
+
         OrderDTO orderDTO = orderService.selectOne(orderId);
         if (orderDTO == null) {
-            return "redirect:/order/showAll/" + login.getId();
+            redirectAttributes.addFlashAttribute("message", "주문이 없습니다.");
+            return "redirect:/showMessage";
         }
         orderService.delete(orderId);
         return "redirect:/order/showAll/" + login.getId();

@@ -20,13 +20,14 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("auth")
-    public String auth(MemberDTO memberDTO, HttpSession session) {
+    public String auth(MemberDTO memberDTO, HttpSession session, Model model) {
         MemberDTO login = memberService.auth(memberDTO);
         if (login != null) {
             session.setAttribute("login", login);
             return "redirect:/shop/showAll";
         }
-        return "redirect:/";
+        model.addAttribute("loginFailed", true);
+        return "index";
     }
 
     @GetMapping("register")
@@ -60,6 +61,7 @@ public class MemberController {
         if (login == null) {
             return "redirect:/";
         }
+
         MemberDTO memberDTO = memberService.selectOne(memberId);
 
         model.addAttribute("memberDTO", memberDTO);

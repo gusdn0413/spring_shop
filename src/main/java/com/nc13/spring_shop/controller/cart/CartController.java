@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -38,7 +39,8 @@ public class CartController {
     }
 
     @PostMapping("insert/{itemId}")
-    public String insert(HttpSession session, @PathVariable int itemId, CartDTO cartDTO) {
+    public String insert(HttpSession session, @PathVariable int itemId, CartDTO cartDTO, RedirectAttributes redirectAttributes) {
+
         MemberDTO login = (MemberDTO) session.getAttribute("login");
         if (login == null) {
             return "redirect:/";
@@ -50,6 +52,11 @@ public class CartController {
         cartDTO.setItemId(itemDTO.getId());
         cartDTO.setPrice(itemDTO.getPrice() * cartDTO.getQuantity());
         cartDTO.setName(itemDTO.getName());
+
+        if ((itemDTO.getQuantity() - cartDTO.getQuantity()) < 0) {
+            redirectAttributes.addFlashAttribute("message", "재고가 부족합니다");
+            return "redirect:/showMessage";
+        }
 
         cartService.insert(cartDTO);
 

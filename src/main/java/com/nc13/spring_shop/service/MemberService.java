@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class MemberService {
@@ -33,5 +35,13 @@ public class MemberService {
 
     public void delete(int memberId) {
         sqlSession.delete(NAMESPACE + "delete", memberId);
+    }
+
+    public List<MemberDTO> selectAll() {
+        return sqlSession.selectList(NAMESPACE + "selectAll");
+    }
+
+    public void updateByManager(MemberDTO updateMemberDTO) {
+        sqlSession.update(NAMESPACE + "updateByManager", updateMemberDTO);
     }
 }

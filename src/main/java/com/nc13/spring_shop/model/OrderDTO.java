@@ -16,4 +16,5 @@ public class OrderDTO {
     private String name;
     private String email;
     private String address;
+    private String content;
 }

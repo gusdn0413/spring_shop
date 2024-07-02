@@ -29,8 +29,20 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-4">
+                    <label for="address">주소</label>
+                    <input type="text" name="address" id="address" class="form-control" required>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <label for="phoneNumber">전화번호</label>
+                    <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" required>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4">
                     <label for="nickname">닉네임</label>
-                    <input type="text" name="nickname" id="nickname" class="form-control">
+                    <input type="text" name="nickname" id="nickname" class="form-control" required>
                 </div>
             </div>
 
